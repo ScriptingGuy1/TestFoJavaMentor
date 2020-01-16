@@ -6,39 +6,39 @@ import java.util.regex.Pattern;
 
 public class Calculator {
  
-	public static void main(String[] args) {	//ИЛЬЯ!!!!! 1+ любое число неправильно работает!!!! Индекс = 0. Разберись!!!!
+	public static void main(String[] args) {	
 		
-		int value1 = -1; 	//Значение 1ой переменной
-		int value2 = -1; 	//Значение 2ой переменной
-		int index1 = -1;	//Индекс Первой переменной
-		int index2 = -1;	//Индекс Второй переменной
-		int flagValue = 0;	//Количество переменных
-		String[] romeSmall = {"i","ii","iii","iv","v","vi","vii","viii","ix","x"};  //Для работы с нижним регистром
+		int value1 = -1; 	//Г‡Г­Г Г·ГҐГ­ГЁГҐ 1Г®Г© ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г®Г©
+		int value2 = -1; 	//Г‡Г­Г Г·ГҐГ­ГЁГҐ 2Г®Г© ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г®Г©
+		int index1 = -1;	//Г€Г­Г¤ГҐГЄГ± ГЏГҐГ°ГўГ®Г© ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г®Г©
+		int index2 = -1;	//Г€Г­Г¤ГҐГЄГ± Г‚ГІГ®Г°Г®Г© ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г®Г©
+		int flagValue = 0;	//ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»Гµ
+		String[] romeSmall = {"i","ii","iii","iv","v","vi","vii","viii","ix","x"};  //Г„Г«Гї Г°Г ГЎГ®ГІГ» Г± Г­ГЁГ¦Г­ГЁГ¬ Г°ГҐГЈГЁГ±ГІГ°Г®Г¬
 	
 		Scanner scan = new Scanner(System.in);			
 		System.out.println("Enter your degeneration");
-		String str = scan.nextLine();	//ввод уравнения
+		String str = scan.nextLine();	//ГўГўГ®Г¤ ГіГ°Г ГўГ­ГҐГ­ГЁГї
 
 		
-		Pattern pattern1 =  Pattern.compile("[^XIVxiv0-9+\\-\\*/]"); //Удаление лишних символов.
+		Pattern pattern1 =  Pattern.compile("[^XIVxiv0-9+\\-\\*/]"); //Г“Г¤Г Г«ГҐГ­ГЁГҐ Г«ГЁГёГ­ГЁГµ Г±ГЁГ¬ГўГ®Г«Г®Гў.
 		Matcher matcher1 = pattern1.matcher(str);
 			if (matcher1.find()==true) {
 				str = matcher1.replaceAll("");
-				System.out.println("Вы ввели лишние символы, так что мне пришлось их удалить");
+				System.out.println("Г‚Г» ГўГўГҐГ«ГЁ Г«ГЁГёГ­ГЁГҐ Г±ГЁГ¬ГўГ®Г«Г», ГІГ ГЄ Г·ГІГ® Г¬Г­ГҐ ГЇГ°ГЁГёГ«Г®Г±Гј ГЁГµ ГіГ¤Г Г«ГЁГІГј");
 			}
 
-		for (int i=0; i<romeSmall.length; i++) { //Работа с регистрами
+		for (int i=0; i<romeSmall.length; i++) { //ГђГ ГЎГ®ГІГ  Г± Г°ГҐГЈГЁГ±ГІГ°Г Г¬ГЁ
 			boolean isRome = str.contains(romeSmall[i]);
 			if (isRome == true) {
 				str = str.toUpperCase();
-				System.out.println("Вы ввели римские цифры в нижнем регистре, но мы смогли понять ваше выражение "+ str);
+				System.out.println("Г‚Г» ГўГўГҐГ«ГЁ Г°ГЁГ¬Г±ГЄГЁГҐ Г¶ГЁГґГ°Г» Гў Г­ГЁГ¦Г­ГҐГ¬ Г°ГҐГЈГЁГ±ГІГ°ГҐ, Г­Г® Г¬Г» Г±Г¬Г®ГЈГ«ГЁ ГЇГ®Г­ГїГІГј ГўГ ГёГҐ ГўГ»Г°Г Г¦ГҐГ­ГЁГҐ "+ str);
 			}
 		}
 		RomanOrArab f =  new RomanOrArab();
-		int typeOfValue = f.ROA(str);  //Проверка Римские цифры или Арабские
+		int typeOfValue = f.ROA(str);  //ГЏГ°Г®ГўГҐГ°ГЄГ  ГђГЁГ¬Г±ГЄГЁГҐ Г¶ГЁГґГ°Г» ГЁГ«ГЁ ГЂГ°Г ГЎГ±ГЄГЁГҐ
 		if(typeOfValue == 1) {
 			ReadArab ReadAr= new ReadArab();
-			int[] readArabResults = ReadAr.RA(str, typeOfValue,value1, value2); // Считывание Арабских цифр
+			int[] readArabResults = ReadAr.RA(str, typeOfValue,value1, value2); // Г‘Г·ГЁГІГ»ГўГ Г­ГЁГҐ ГЂГ°Г ГЎГ±ГЄГЁГµ Г¶ГЁГґГ°
 			value1 = readArabResults[0];
 			value2 = readArabResults[1];
 			index1 = readArabResults[2];
@@ -48,14 +48,14 @@ public class Calculator {
 		}
 		if(typeOfValue == 2) {
 			ReadRoman ReadRo= new ReadRoman();
-			int[] readRomeResults = ReadRo.RR(str, typeOfValue,value1, value2); // Считывание Арабских цифр
+			int[] readRomeResults = ReadRo.RR(str, typeOfValue,value1, value2); // Г‘Г·ГЁГІГ»ГўГ Г­ГЁГҐ ГЂГ°Г ГЎГ±ГЄГЁГµ Г¶ГЁГґГ°
 			value1 = readRomeResults[0];
 			value2 = readRomeResults[1];
 			index1 = readRomeResults[2];
 			index2 = readRomeResults[3];
 			flagValue = readRomeResults[4];
 		}
-		if (index1>index2) {  //Правильное рассположение переменных
+		if (index1>index2) {  //ГЏГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г°Г Г±Г±ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»Гµ
 			int swap = value1;
 			value1 = value2;
 			value2 = swap;
@@ -64,11 +64,11 @@ public class Calculator {
 			index2 = swap;
 		}  
 		if (value1==9) index2 = 20;
-		value1++; // Массив начинается с 0
+		value1++; // ГЊГ Г±Г±ГЁГў Г­Г Г·ГЁГ­Г ГҐГІГ±Гї Г± 0
 		value2++;
-		if (value1 == 0)  {		//При вводе одинковых цифр (f.e. 10+10) присваевает второй переменной значение первой
+		if (value1 == 0)  {		//ГЏГ°ГЁ ГўГўГ®Г¤ГҐ Г®Г¤ГЁГ­ГЄГ®ГўГ»Гµ Г¶ГЁГґГ° (f.e. 10+10) ГЇГ°ГЁГ±ГўГ ГҐГўГ ГҐГІ ГўГІГ®Г°Г®Г© ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г®Г© Г§Г­Г Г·ГҐГ­ГЁГҐ ГЇГҐГ°ГўГ®Г©
 			value1 = value2; 
-			index2 = index1+20;	//Для проверки на ошибку местоположение знака(+10 8)
+			index2 = index1+20;	//Г„Г«Гї ГЇГ°Г®ГўГҐГ°ГЄГЁ Г­Г  Г®ГёГЁГЎГЄГі Г¬ГҐГ±ГІГ®ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ Г§Г­Г ГЄГ (+10 8)
 		}
 		if (flagValue == 0) {
 			System.out.println("Error! You entered romans and arabs value.");
@@ -76,7 +76,7 @@ public class Calculator {
 		}
 	 	 
 		 
-		TypeOfOperation operation = new TypeOfOperation();	//Считываем и расспазнаем тип опреации
+		TypeOfOperation operation = new TypeOfOperation();	//Г‘Г·ГЁГІГ»ГўГ ГҐГ¬ ГЁ Г°Г Г±Г±ГЇГ Г§Г­Г ГҐГ¬ ГІГЁГЇ Г®ГЇГ°ГҐГ Г¶ГЁГЁ
 		int typeOfCalc = operation.TOF(str,index1,index2,typeOfValue);
 		ProcessCalculator Calc = new ProcessCalculator();
 		Calc.Process(str, value1, value2, typeOfValue, typeOfCalc);
