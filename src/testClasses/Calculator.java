@@ -7,55 +7,58 @@ import java.util.regex.Pattern;
 public class Calculator {
  
 	public static void main(String[] args) {	
-		
-		int value1 = -1; 	//Çíà÷åíèå 1îé ïåðåìåííîé
-		int value2 = -1; 	//Çíà÷åíèå 2îé ïåðåìåííîé
-		int index1 = -1;	//Èíäåêñ Ïåðâîé ïåðåìåííîé
-		int index2 = -1;	//Èíäåêñ Âòîðîé ïåðåìåííîé
-		int flagValue = 0;	//Êîëè÷åñòâî ïåðåìåííûõ
-		String[] romeSmall = {"i","ii","iii","iv","v","vi","vii","viii","ix","x"};  //Äëÿ ðàáîòû ñ íèæíèì ðåãèñòðîì
-	
+		 
+		int value1 = -1; 	//Значение 1ой переменной
+		int value2 = -1; 	//Значение 2ой переменной
+		int index1 = -1;	//Индекс Первой переменной
+		int index2 = -1;	//Индекс Второй переменной
+		int flagValue = 0;	//Количество переменных
+		String[] romeSmall = {"i","ii","iii","iv","v","vi","vii","viii","ix","x"};  //Для работы с нижним регистром
+	 
 		Scanner scan = new Scanner(System.in);			
-		System.out.println("Enter your degeneration");
-		String str = scan.nextLine();	//ââîä óðàâíåíèÿ
+		System.out.println("Enter your degeneration. You must enter values from 1 to 9 and sign");
+		String str = scan.nextLine();	//ввод уравнения
 
 		
-		Pattern pattern1 =  Pattern.compile("[^XIVxiv0-9+\\-\\*/]"); //Óäàëåíèå ëèøíèõ ñèìâîëîâ.
+		Pattern pattern1 =  Pattern.compile("[^XIVxiv0-9+\\-\\*/]"); //Удаление лишних символов.
 		Matcher matcher1 = pattern1.matcher(str);
 			if (matcher1.find()==true) {
 				str = matcher1.replaceAll("");
-				System.out.println("Âû ââåëè ëèøíèå ñèìâîëû, òàê ÷òî ìíå ïðèøëîñü èõ óäàëèòü");
+				System.out.println("Вы ввели лишние символы, так что мне пришлось их удалить");
 			}
 
-		for (int i=0; i<romeSmall.length; i++) { //Ðàáîòà ñ ðåãèñòðàìè
+
+			
+		for (int i=0; i<romeSmall.length; i++) { //Работа с регистрами
 			boolean isRome = str.contains(romeSmall[i]);
 			if (isRome == true) {
 				str = str.toUpperCase();
-				System.out.println("Âû ââåëè ðèìñêèå öèôðû â íèæíåì ðåãèñòðå, íî ìû ñìîãëè ïîíÿòü âàøå âûðàæåíèå "+ str);
+				System.out.println("Вы ввели римские цифры в нижнем регистре, но мы смогли понять ваше выражение "+ str);
 			}
 		}
 		RomanOrArab f =  new RomanOrArab();
-		int typeOfValue = f.ROA(str);  //Ïðîâåðêà Ðèìñêèå öèôðû èëè Àðàáñêèå
+		int typeOfValue = f.ROA(str);  //Проверка Римские цифры или Арабские
+		
 		if(typeOfValue == 1) {
 			ReadArab ReadAr= new ReadArab();
-			int[] readArabResults = ReadAr.RA(str, typeOfValue,value1, value2); // Ñ÷èòûâàíèå Àðàáñêèõ öèôð
+			int[] readArabResults = ReadAr.RA(str, typeOfValue,value1, value2); // Считывание Арабских цифр
 			value1 = readArabResults[0];
 			value2 = readArabResults[1];
 			index1 = readArabResults[2];
 			index2 = readArabResults[3];
 			flagValue = readArabResults[4];
-			
+			 
 		}
 		if(typeOfValue == 2) {
 			ReadRoman ReadRo= new ReadRoman();
-			int[] readRomeResults = ReadRo.RR(str, typeOfValue,value1, value2); // Ñ÷èòûâàíèå Àðàáñêèõ öèôð
+			int[] readRomeResults = ReadRo.RR(str, typeOfValue,value1, value2); // Считывание Арабских цифр
 			value1 = readRomeResults[0];
 			value2 = readRomeResults[1];
 			index1 = readRomeResults[2];
 			index2 = readRomeResults[3];
 			flagValue = readRomeResults[4];
 		}
-		if (index1>index2) {  //Ïðàâèëüíîå ðàññïîëîæåíèå ïåðåìåííûõ
+		if (index1>index2) {  //Правильное рассположение переменных
 			int swap = value1;
 			value1 = value2;
 			value2 = swap;
@@ -64,19 +67,19 @@ public class Calculator {
 			index2 = swap;
 		}  
 		if (value1==9) index2 = 20;
-		value1++; // Ìàññèâ íà÷èíàåòñÿ ñ 0
+		value1++; // Массив начинается с 0
 		value2++;
-		if (value1 == 0)  {		//Ïðè ââîäå îäèíêîâûõ öèôð (f.e. 10+10) ïðèñâàåâàåò âòîðîé ïåðåìåííîé çíà÷åíèå ïåðâîé
+		if (value1 == 0)  {		//При вводе одинковых цифр (f.e. 10+10) присваевает второй переменной значение первой
 			value1 = value2; 
-			index2 = index1+20;	//Äëÿ ïðîâåðêè íà îøèáêó ìåñòîïîëîæåíèå çíàêà(+10 8)
+			index2 = index1+20;	//Для проверки на ошибку местоположение знака(+10 8)
 		}
 		if (flagValue == 0) {
-			System.out.println("Error! You entered romans and arabs value.");
+			System.out.println("Error! You entered romans and arabs value or Empty expression");
 			System.exit(1);
 		}
 	 	 
 		 
-		TypeOfOperation operation = new TypeOfOperation();	//Ñ÷èòûâàåì è ðàññïàçíàåì òèï îïðåàöèè
+		TypeOfOperation operation = new TypeOfOperation();	//Считываем и расспазнаем тип опреации
 		int typeOfCalc = operation.TOF(str,index1,index2,typeOfValue);
 		ProcessCalculator Calc = new ProcessCalculator();
 		Calc.Process(str, value1, value2, typeOfValue, typeOfCalc);
