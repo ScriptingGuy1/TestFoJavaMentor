@@ -6,30 +6,49 @@ public class ReadArab {
 
 
  	
-	// Считывание Арабских цифр
+	// Г‘Г·ГЁГІГ»ГўГ Г­ГЁГҐ ГЂГ°Г ГЎГ±ГЄГЁГµ Г¶ГЁГґГ°
 	public  int[] RA(String str, int typeOfValue,int value1, int value2) {
 		int index1=-1;  
 		int index2=-1;
 		int flagValue = 0;
 		boolean flagErr = false; 
 		String[] arab = {"10","9","8","7","6","5","4","3","2","1"};
-		String reservStr = str; //Резервная копия строки
+		String reservStr = str; //ГђГҐГ§ГҐГ°ГўГ­Г Гї ГЄГ®ГЇГЁГї Г±ГІГ°Г®ГЄГЁ
 		 if (typeOfValue == 1) {
 			for (int i=0; i<arab.length; i++) {
 				boolean isContain1 = str.contains(arab[i]);
-				if (isContain1 == true) { //Если мы нашли число из массива arab, то записываем его значение и индекс
+				if (isContain1 == true) { //Г…Г±Г«ГЁ Г¬Г» Г­Г ГёГ«ГЁ Г·ГЁГ±Г«Г® ГЁГ§ Г¬Г Г±Г±ГЁГўГ  arab, ГІГ® Г§Г ГЇГЁГ±Г»ГўГ ГҐГ¬ ГҐГЈГ® Г§Г­Г Г·ГҐГ­ГЁГҐ ГЁ ГЁГ­Г¤ГҐГЄГ±
 					if (flagValue == 0) {
 						value1 = 9 - i;
 						flagValue = 1;
 						index1 = str.indexOf(arab[i]);
-						str = str.replaceAll(arab[i], "."); // Для работы с выражениями 10+10 9+9 и тд
-						flagErr = true;			//Для защиты от ситуаций с вводом только одного слогаемого
+						str = str.replaceAll(arab[i], "."); // Г„Г«Гї Г°Г ГЎГ®ГІГ» Г± ГўГ»Г°Г Г¦ГҐГ­ГЁГїГ¬ГЁ 10+10 9+9 ГЁ ГІГ¤
+						if ((index1+1)!=str.length()) { //Р”Р»СЏ РїСЂРѕРІРµСЂРєРё РЅР° Р·РЅР°С‡РµРЅРёРµ Р±РѕР»СЊС€Рµ 10
+							char ch = str.charAt(index1+1);
+							if ((ch!='+')&(ch!='-')&(ch!='*')&(ch!='/')) {
+								System.out.println("Error! incorrect variables");
+								System.exit(1);
+							}
+							else ch = str.charAt(str.length()-2);
+							if ((ch!='+')&(ch!='-')&(ch!='*')&(ch!='/')) {
+								System.out.println("Error! incorrect variables");
+								System.exit(1);
+							}
+						}
+						flagErr = true;			//Г„Г«Гї Г§Г Г№ГЁГІГ» Г®ГІ Г±ГЁГІГіГ Г¶ГЁГ© Г± ГўГўГ®Г¤Г®Г¬ ГІГ®Г«ГјГЄГ® Г®Г¤Г­Г®ГЈГ® Г±Г«Г®ГЈГ ГҐГ¬Г®ГЈГ®
 					}	
 					else 
 						if(flagValue == 1) {
 							value2 = 9 - i;
 							flagValue = 2;
 							index2 = str.indexOf(arab[i]);
+							if ((index2+1)!=str.length()) {
+								char ch = str.charAt(index2+1);
+								if ((ch!='+')&(ch!='-')&(ch!='*')&(ch!='/')) {
+									System.out.println("Error! You entered incorrect variables");
+									System.exit(1);
+								}
+							}
 						}
 						else {
 							if (flagValue == 2) {
@@ -42,13 +61,13 @@ public class ReadArab {
 		 }
 		  
 		int indexErr = index1;
-		if (flagErr==true) { //Проверка на 10+10
+		if (flagErr==true) { //ГЏГ°Г®ГўГҐГ°ГЄГ  Г­Г  10+10
 			 indexErr = str.indexOf(".",index1+1);
 			 if(indexErr == -1) flagErr = false;
 			
 		 }
 
-		if (((flagErr == false)&(value2 == -1))|((flagValue == 1)&((flagErr == false)))) { //Защита от ввода только одного слогаемого f.e. 10+  +4 итд
+		if (((flagErr == false)&(value2 == -1))|((flagValue == 1)&((flagErr == false)))) { //Г‡Г Г№ГЁГІГ  Г®ГІ ГўГўГ®Г¤Г  ГІГ®Г«ГјГЄГ® Г®Г¤Г­Г®ГЈГ® Г±Г«Г®ГЈГ ГҐГ¬Г®ГЈГ® f.e. 10+  +4 ГЁГІГ¤
 			System.out.println("Error! You entered only incorect the equation, or does not correspond to a task");
 			System.exit(1);	
 		}
