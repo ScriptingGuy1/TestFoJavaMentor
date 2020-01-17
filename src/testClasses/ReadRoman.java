@@ -5,19 +5,19 @@ public class ReadRoman {
 	String str;
 	
 	
-	//Считывание Римских цифр 
+	//РЎС‡РёС‚С‹РІР°РЅРёРµ Р РёРјСЃРєРёС… С†РёС„СЂ 
 	public  int[] RR(String str, int typeOfValue,int value1, int value2) {
 		int index1=-1;
 		int index2=-1;
 		int flagValue = 0;
 		boolean flagErr = false;
-		String[] rome2 = {"IX","X","VIII","VII","VI","IV","III","II","I","V"}; //Для корректного считывания Римских цифр
+		String[] rome2 = {"IX","X","VIII","VII","VI","IV","III","II","I","V"}; //Р”Р»СЏ РєРѕСЂСЂРµРєС‚РЅРѕРіРѕ СЃС‡РёС‚С‹РІР°РЅРёСЏ Р РёРјСЃРєРёС… С†РёС„СЂ
 		String[] arab2 = {"9","10","8","7","6","4","3","2","1","5"};
 		String[] arab = {"10","9","8","7","6","5","4","3","2","1"}; 
 		String reservStr = str;
 		if (typeOfValue == 2) {
 			 for (int i=0; i<rome2.length; i++) {
-					str=str.replaceAll(rome2[i],arab2[i]);	//Перевод в Арабские. ИЛЬЯ, этот участок дублируется с ReadArab, их можно как-нибудь обьяденить
+					str=str.replaceAll(rome2[i],arab2[i]);	//РџРµСЂРµРІРѕРґ РІ РђСЂР°Р±СЃРєРёРµ. РР›Р¬РЇ, СЌС‚РѕС‚ СѓС‡Р°СЃС‚РѕРє РґСѓР±Р»РёСЂСѓРµС‚СЃСЏ СЃ ReadArab, РёС… РјРѕР¶РЅРѕ РєР°Рє-РЅРёР±СѓРґСЊ РѕР±СЊСЏРґРµРЅРёС‚СЊ
 				}
 				for (int i=0; i<arab.length; i++) {
 					boolean isContain1 = str.contains(arab[i]);
@@ -27,13 +27,32 @@ public class ReadRoman {
 							flagValue = 1;
 							index1 = str.indexOf(arab[i]);
 							str = str.replaceAll(arab[i], ".");
-							flagErr = true;			//Для защиты от ситуаций с вводом только одного слогаемого
+							if ((index1+1)!=str.length()) { //Р”Р»СЏ РїСЂРѕРІРµСЂРєРё РЅР° Р·РЅР°С‡РµРЅРёРµ Р±РѕР»СЊС€Рµ 10
+								char ch = str.charAt(index1+1);
+								if ((ch!='+')&(ch!='-')&(ch!='*')&(ch!='/')) {
+									System.out.println("Error! You entered incorrect variables");
+									System.exit(1);
+								}
+								else ch = str.charAt(str.length()-2);
+								if ((ch!='+')&(ch!='-')&(ch!='*')&(ch!='/')) {
+									System.out.println("Error! incorrect variables");
+									System.exit(1);
+								}
+							}
+							flagErr = true;			//Р”Р»СЏ Р·Р°С‰РёС‚С‹ РѕС‚ СЃРёС‚СѓР°С†РёР№ СЃ РІРІРѕРґРѕРј С‚РѕР»СЊРєРѕ РѕРґРЅРѕРіРѕ СЃР»РѕРіР°РµРјРѕРіРѕ
 						}	
 						else 
 							if(flagValue == 1) {
 								value2 = 9 - i;
 								flagValue = 2;
 								index2 = str.indexOf(arab[i]);// + arab[i].length()-1;
+								if ((index1+1)!=str.length()) { //Р”Р»СЏ РїСЂРѕРІРµСЂРєРё РЅР° Р·РЅР°С‡РµРЅРёРµ Р±РѕР»СЊС€Рµ 10
+									char ch = str.charAt(index1+1);
+									if ((ch!='+')&(ch!='-')&(ch!='*')&(ch!='/')) {
+										System.out.println("Error! You entered incorrect variables");
+										System.exit(1);
+									}
+								}
 							} 
 							else
 								if (flagValue == 2) {
@@ -42,16 +61,16 @@ public class ReadRoman {
 							}	
 					}
 				}
-		}
+		} 
 		
 		int indexErr = index1;
-		if (flagErr==true) { //Проверка на 10+10
+		if (flagErr==true) { //РџСЂРѕРІРµСЂРєР° РЅР° 10+10
 			 indexErr = str.indexOf(".",index1+1);
 			 if(indexErr == -1) flagErr = false;
 			
 		 }
 
-		if (((flagErr == false)&(value2 == -1))|((flagValue == 1)&((flagErr == false)))) { //Защита от ввода только одного слогаемого f.e. 10+  +4 итд
+		if (((flagErr == false)&(value2 == -1))|((flagValue == 1)&((flagErr == false)))) { //Р—Р°С‰РёС‚Р° РѕС‚ РІРІРѕРґР° С‚РѕР»СЊРєРѕ РѕРґРЅРѕРіРѕ СЃР»РѕРіР°РµРјРѕРіРѕ f.e. 10+  +4 РёС‚Рґ
 			System.out.println("Error! You entered only incorect the equation, or does not correspond to a task");
 			System.exit(1);	
 		}
