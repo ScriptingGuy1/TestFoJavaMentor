@@ -16,7 +16,7 @@ public class Calculator {
 		String[] romeSmall = {"i","ii","iii","iv","v","vi","vii","viii","ix","x"};  //Для работы с нижним регистром
 	 
 		Scanner scan = new Scanner(System.in);			
-		System.out.println("Enter your degeneration. You must enter values from 1 to 9 and sign");
+		System.out.println("Введите ваше уравнение. Вы должны Вводить только целые числа от 1 до 10 (или их эквивалент в Римких числах) и один знак операции.");
 		String str = scan.nextLine();	//ввод уравнения
 
 		
@@ -24,7 +24,8 @@ public class Calculator {
 		Matcher matcher1 = pattern1.matcher(str);
 			if (matcher1.find()==true) {
 				str = matcher1.replaceAll("");
-				System.out.println("Вы ввели лишние символы, так что мне пришлось их удалить");
+				System.out.println("Вы ввели лишние символы, уравнение должно состоять только из цифр от 1 до 10 (в римской системе или арабской) и не более одного знака операции.");
+				System.exit(1);
 			}
 
 
